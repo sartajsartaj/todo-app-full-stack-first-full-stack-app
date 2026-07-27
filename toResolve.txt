@@ -1,0 +1,11 @@
+// problems in the todo app
+// checkbox not working correctly done
+// no update functionality in TodoItem.jsx done
+
+// cookies express pe set kre yaa nextJs server pe
+
+// change name from todoApp to workspace done
+
+// cors ko sahi krnaa h jisse ki deploy krne par bhi sahi chale application. (not needed because I am using nextJS server actions) done
+
+// 

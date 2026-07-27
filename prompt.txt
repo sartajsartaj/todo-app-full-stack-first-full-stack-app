@@ -1,0 +1,48 @@
+you are an expert full-stack engineer.
+
+I want to make a basic todo-app with backend in express with no DB (in memory array for now) and frontend in NextJs.
+
+The app should store todos of different users and show the todos of the logged in user.
+
+like : 
+
+const usersDb = [{
+  id : Date.now(),
+  email : abc@example.com,
+  password : encrypted_password_using_bcrypt
+}]
+
+
+I have initialised the project and have made two folders : Frontend and Backend. In "Frontend" folder, I have installed nextJs.
+
+The frontend basically contains 3 pages : a "register" page (if user has not registerd yet), a "login" page (if user is registered but not logged in), and a "todos" page with a logout button on the top-right (if user is logged in).
+
+Let's work on backend first. I have initialised the backend using npm init -y. 
+
+Here is my package.json
+
+{
+  "name": "todoApp backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
+
+when user visits the website, he would be redirected to his todos if he is logged in, or to login page if he is registered or to register page if he is not registered.
+
+Help me make this project by using first principles and socratic learning way.

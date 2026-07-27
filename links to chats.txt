@@ -1,0 +1,9 @@
+july 24 2026:
+These are the google-gemini chat links that made this project possible.
+
+main chat :
+https://gemini.google.com/app/737802bfd3ff333a
+
+chat for correction :
+https://gemini.google.com/app/3805217141198aba
+
