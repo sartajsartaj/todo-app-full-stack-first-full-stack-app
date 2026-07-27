@@ -2,7 +2,7 @@
 // checkbox not working correctly done
 // no update functionality in TodoItem.jsx done
 
-// cookies express pe set kre yaa nextJs server pe
+// cookies express pe set kre yaa nextJs server pe done
 
 // change name from todoApp to workspace done
 

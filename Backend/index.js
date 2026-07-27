@@ -91,6 +91,26 @@ server.post("/login", async (req, res, next) => {
       });
     }
 
+    // // first approach : send cookie by express backend
+    // const newToken = jwt.sign(
+    //   {
+    //     id: foundUser.id,
+    //     email,
+    //   },
+    //   jwtSecret,
+    //   { expiresIn: "5m" },
+    // );
+    // res.cookie("token", newToken, {
+    //   httpOnly: true, // Prevents client-side JS (XSS attacks) from reading the cookie
+    //   secure: process.env.NODE_ENV === "production", // Sent over HTTPS only in production
+    //   sameSite: "lax", // Protects against Cross-Site Request Forgery (CSRF)
+    //   maxAge: 5 * 60 * 1000, // 5min expiry (in milliseconds)
+    // });
+    // res.status(200).json({
+    //   message: "login successful!",
+    // });
+
+    // second approach : send token in body and let nextJs set the cookie (recommended for Next.js)
     const newToken = jwt.sign(
       {
         id: foundUser.id,
@@ -99,15 +119,13 @@ server.post("/login", async (req, res, next) => {
       jwtSecret,
       { expiresIn: "5m" },
     );
-    res.cookie("token", newToken, {
-      httpOnly: true, // Prevents client-side JS (XSS attacks) from reading the cookie
-      secure: process.env.NODE_ENV === "production", // Sent over HTTPS only in production
-      sameSite: "lax", // Protects against Cross-Site Request Forgery (CSRF)
-      maxAge: 5 * 60 * 1000, // 5min expiry (in milliseconds)
-    });
+
+    // Return token in JSON body — let Next.js set the cookie
     res.status(200).json({
       message: "login successful!",
+      token: newToken,
     });
+
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong during login.",
