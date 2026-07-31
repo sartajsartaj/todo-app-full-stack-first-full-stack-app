@@ -98,7 +98,7 @@ server.post("/login", async (req, res, next) => {
     //     email,
     //   },
     //   jwtSecret,
-    //   { expiresIn: "5m" },
+    //   { expiresIn: "10m" },
     // );
     // res.cookie("token", newToken, {
     //   httpOnly: true, // Prevents client-side JS (XSS attacks) from reading the cookie
@@ -117,7 +117,7 @@ server.post("/login", async (req, res, next) => {
         email,
       },
       jwtSecret,
-      { expiresIn: "5m" },
+      { expiresIn: "10m" },
     );
 
     // Return token in JSON body — let Next.js set the cookie
@@ -125,7 +125,6 @@ server.post("/login", async (req, res, next) => {
       message: "login successful!",
       token: newToken,
     });
-
   } catch (error) {
     res.status(500).json({
       message: "Something went wrong during login.",
@@ -136,9 +135,19 @@ server.post("/login", async (req, res, next) => {
 function authenticateToken(req, res, next) {
   // 1. Extract token from either cookie OR Authorization header
   const tokenFromWebSite = req.cookies?.token; // if frontend is web-app
-  const tokenFromMobileApp = req.headers["authorization"]?.split(" ")[1]; // if frontend is android/ios app
+  const tokenFromMobileApp =
+    req.headers["authorization"] &&
+    req.headers["authorization"].startsWith("Bearer ")
+      ? req.headers["authorization"].split(" ")[1]
+      : null; // if frontend is android/ios app
   // 2. Extract the token
   const token = tokenFromMobileApp || tokenFromWebSite;
+
+  // To check in postman :
+  // For web : send token via headers. Under headers section, set key as cookie, Value as token=your_copied_token_from_login_request, then send request
+  // For native android/ios app: send token via : go to Authorization tab, select Bearer Token, paste the token, then send request.
+  // Don't forget to send json in body in both the cases like {"title" : "my first todo", "isCompleted" : "false"}
+  // send POST request to http://localhost:3000/todo in both cases
 
   // 3. If no token, return 401 (Unauthorized)
   if (!token) {
@@ -231,6 +240,7 @@ server.patch("/todos/:id", authenticateToken, authorize, (req, res) => {
   const userId = Number(req.user.id);
   const foundTodo = req.todo;
 
+  // user may send title or isCompleted or both in body
   // if user sends title in body
   const newTitle = req.body.title;
   if (newTitle !== undefined && newTitle.trim() !== "") {
